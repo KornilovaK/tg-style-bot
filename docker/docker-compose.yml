@@ -1,0 +1,16 @@
+version: "1.0"
+services:
+  bot_service:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    volumes:
+      - ../app:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5001
+      - MODELS_PATH=models
+      - BOT_TOKEN=6938335921:AAErgW2T_FASBIaMwGfH035MlLFEth2OfKE
+    ports:
+      - 5001:5001
