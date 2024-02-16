@@ -202,7 +202,7 @@ async def process_photo_sent(message: Message, state: FSMContext):
 	user_dict[message.from_user.id] = await state.get_data()
 	photo_path = user_dict[message.from_user.id]['photo_path']
 	photo_mode = user_dict[message.from_user.id]['photo_mode']
-	path_to_model = os.path.join(models_path, f'{photo_mode}.pk')
+	path_to_model = os.path.join(models_path, f'{photo_mode}.onnx')
 	model = Models(path_to_model, photo_path)
 	photo = model.run()
 

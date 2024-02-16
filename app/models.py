@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.transforms as transforms
+import onnxruntime as ort
+
 
 from PIL import Image
 
@@ -31,17 +33,18 @@ class Models():
         return image, size
     
     def run(self):
-        model = torch.load(self.path_to_model, map_location=torch.device('cpu')).to(self.device).eval()
+        ort_sess = ort.InferenceSession(self.path_to_model)
         photo, size = self.preprocess_image(self.photo_path)
         w, h = size
-        output = model(photo).cpu().detach()[0]
-
+        
         loader = transforms.Compose([
             transforms.Normalize(mean=[0., 0., 0.], std=[1/0.229, 1/0.224, 1/0.225]),
             transforms.Normalize(mean=[-0.485, -0.456, -0.406], std=[1., 1., 1.]),
             transforms.Resize((h, w))])
 
-        res = loader(output).numpy().transpose(1, 2, 0)
+        outputs = ort_sess.run(None, {'input': photo.numpy()})
+        out = torch.tensor(outputs)[0][0]
+        res = loader(out).numpy().transpose(1, 2, 0)
 
         return res
     
