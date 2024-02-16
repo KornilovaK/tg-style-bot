@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.transforms as transforms
 import onnxruntime as ort
-
+import numpy as np
 
 from PIL import Image
 
@@ -43,7 +43,7 @@ class Models():
             transforms.Resize((h, w))])
 
         outputs = ort_sess.run(None, {'input': photo.numpy()})
-        out = torch.tensor(outputs)[0][0]
+        out = torch.tensor(np.array(outputs))[0][0]
         res = loader(out).numpy().transpose(1, 2, 0)
 
         return res
