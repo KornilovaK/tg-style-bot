@@ -21,3 +21,4 @@
 - Конвертировать веса моделей в onnx формат для ускорения вычислений
 
 О том, как создавался бот, можно посмотреть в репозитории **Create_tg_style_bot**
+Видео работы бота https://drive.google.com/drive/folders/1vZ0Kwubu91p7LU0RbbX9Xl1fZYJdhVjB?usp=sharing
